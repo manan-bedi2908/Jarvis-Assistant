@@ -2,6 +2,7 @@ import pyttsx3
 import datetime
 import speech_recognition as sr
 import wikipedia
+import pyaudio
 
 engine = pyttsx3.init('sapi5')
 voices = engine.getProperty('voices')
@@ -48,4 +49,10 @@ if __name__ == '__main__':
         query = takeCommand().lower()
 
         # Logicfor executing tasks based on query
+        if 'wikipedia' in query:
+            speak('Searching Wikipedia...')
+            query = query.replace('wikipedia', '')
+            results = wikipedia.summary(query, sentences = 3)
+            speak("According to Wikipedia, ")
+            speak(results)
 
