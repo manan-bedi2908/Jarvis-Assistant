@@ -5,6 +5,7 @@ import webbrowser
 import pyttsx3
 import speech_recognition as sr
 import wikipedia
+import sys
 
 engine = pyttsx3.init('sapi5')
 voices = engine.getProperty('voices')
@@ -63,7 +64,7 @@ if __name__ == '__main__':
     if 1:
         query = takeCommand().lower()
 
-        # Logicfor executing tasks based on query
+        # Logic for executing tasks based on query
         if 'wikipedia' in query:
             speak('Searching Wikipedia...')
             query = query.replace('wikipedia', '')
@@ -79,6 +80,9 @@ if __name__ == '__main__':
 
         elif 'open my github account' in query:
             webbrowser.open('https://github.com/manan-bedi2908')
+
+        elif 'open my linkedin account' in query:
+            webbrowser.open('')
 
         elif 'play music' in query:
             music_dir = 'E:\\SONGS'
@@ -103,3 +107,6 @@ if __name__ == '__main__':
             except Exception as e:
                 print("Error Occured")
                 speak("Sorry, I wasn't able to send the email")
+
+        elif 'quit' in query:
+            sys.exit()
