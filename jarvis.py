@@ -57,10 +57,21 @@ def sendEmail(to, content):
 
 def google():
     speak("Opening Google...")
-    webbrowser.open('https://www.google.com/')
+    directory = "GeeksForGeeks"
+
+    # Parent Directory path
+    parent_dir = "E:\\HTML FILE"
+
+    # Path
+    path = os.path.join(parent_dir, directory)
+
+    # Create the directory
+    # 'GeeksForGeeks' in
+    # '/home / User / Documents'
+    os.mkdir(path)
 
 if __name__ == '__main__':
-    wishMe()
+    google()
     if 1:
         query = takeCommand().lower()
 
@@ -96,6 +107,16 @@ if __name__ == '__main__':
         elif 'open sublime text editor' in query:
             loc = "C:\\Program Files\\Sublime Text 3\\sublime_text.exe"
             os.startfile(loc)
+
+        elif 'ip network settings' in query:
+            os.ipconfig()
+
+        elif 'create a new directory' in query:
+            try:
+                speak("Creating Directory")
+                os.mkdir('E:\', 'manan.txt)
+            except:
+                speak("Error occured!!")
 
         elif 'send email to manan' in query:
             try:
