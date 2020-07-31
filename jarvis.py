@@ -28,10 +28,13 @@ def wishMe():
 
 def takeCommand():
     r = sr.Recognizer()
-    with sr.Microphone() == source:
+    with sr.Microphone() == source :
         print("Listening...")
         r.pause_threshold = 1
         audio = r.listen(source)
+    # with sr.WavFile("test.wav") as source:  # use "test.wav" as the audio source
+    #     audio = r.record(source)
+
 
     try:
         print("Recognizing...")
