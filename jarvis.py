@@ -6,6 +6,9 @@ import pyttsx3
 import speech_recognition as sr
 import wikipedia
 import sys
+import requests
+import json
+import subprocess
 
 engine = pyttsx3.init('sapi5')
 voices = engine.getProperty('voices')
@@ -55,20 +58,7 @@ def sendEmail(to, content):
     server.sendmail('mananbedilps@gmail.com', to, content)
     server.close()
 
-def google():
-    speak("Opening Google...")
-    directory = "GeeksForGeeks"
 
-    # Parent Directory path
-    parent_dir = "E:\\HTML FILE"
-
-    # Path
-    path = os.path.join(parent_dir, directory)
-
-    # Create the directory
-    # 'GeeksForGeeks' in
-    # '/home / User / Documents'
-    os.mkdir(path)
 
 if __name__ == '__main__':
     google()
@@ -139,6 +129,41 @@ if __name__ == '__main__':
             except Exception as e:
                 print("Error Occured")
                 speak("Sorry, I wasn't able to send the email")
+
+        elif "weather" in query:
+            api_key = "41fa3f5489msh283ac1b29e9fbe6p105715jsnff18271a9177"
+            base_url = "http://api.openweathermap.org/data/2.5/weather?"
+            speak("Getting your city from IPStack API")
+            send_url = "http://api.ipstack.com/check?access_key=97ca076f0f857bd3105915b238a61bf2"
+            geo_req = requests.get(send_url)
+            geo_json = json.loads(geo_req.text)
+            latitude = geo_json['latitude']
+            longitude = geo_json['longitude']
+            city = geo_json['city']
+            speak("You are in {}".format(city))
+            url = base_url + "appid="+api_key+"&q="+city
+            response = requests.get(url)
+            loc = response.json()
+            if loc['cod']!="404":
+                y = loc["main"]
+                current_temp = y["temp"]
+                current_humidity = y["humidity"]
+                z = loc["weather"]
+                weather_desc = z[0]['description']
+                speak("Temperature in Kelvin unit is" + str(current_temp) + "and humidity is" + str(current_humidity) + "And description" + str(weather_desc))
+                print("Temperature in Kelvin unit is" + str(current_temp) + "and humidity is" + str(current_humidity) + "And description" + str(weather_desc))
+            else:
+                speak("City not found")
+                print("City not found")
+
+        elif "search" in query:
+            query = query.replace("search", "")
+            webbrowser.open_new_tab(query)
+
+        elif "log off" in query or "shutdown" in query:
+            speak("Turning off the computer")
+            subprocess.call(["shutdown", "/l"])
+
 
         elif 'quit' in query:
             sys.exit()
