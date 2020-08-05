@@ -1,5 +1,6 @@
 import datetime
 import os
+import time
 import smtplib
 import webbrowser
 import pyttsx3
@@ -9,6 +10,7 @@ import sys
 import requests
 import json
 import subprocess
+import pywhatkit as kit
 
 engine = pyttsx3.init('sapi5')
 voices = engine.getProperty('voices')
@@ -61,7 +63,7 @@ def sendEmail(to, content):
 
 
 if __name__ == '__main__':
-    google()
+    wishMe()
     if 1:
         query = takeCommand().lower()
 
@@ -164,6 +166,16 @@ if __name__ == '__main__':
             speak("Turning off the computer")
             subprocess.call(["shutdown", "/l"])
 
+        elif "set an alarm" in query:
+            now = datetime.datetime.now()
+            alarm_time = datetime.datetime.combine(now.date(), datetime.time(18, 0, 0))
+            time.sleep((alarm_time - now).total_seconds())
+            os.system("ALL RISE.mp3")
+
+        elif "send whatsapp message" in query:
+            speak("Enter the Phone Number of the person whom you want to send the message")
+            inp = input("Enter WhatsApp Number")
+            kit.sendwhatmsg(inp, "Hello Friend! How are You?", 18, 21)
 
         elif 'quit' in query:
             sys.exit()
